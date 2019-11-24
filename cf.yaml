@@ -1,0 +1,734 @@
+Directory = C:\Users\jojiv\Desktop\OnlineTechTalks\cdk-workshop\lib/../apps/hello-world
+Resources:
+  JVCDKVPC82395698:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/Resource
+  JVCDKVPCPublicSubnet1Subnet2933E32F:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.0.0.0/18
+      VpcId:
+        Ref: JVCDKVPC82395698
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet1
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet1/Subnet
+  JVCDKVPCPublicSubnet1RouteTable887989FF:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: JVCDKVPC82395698
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet1
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet1/RouteTable
+  JVCDKVPCPublicSubnet1RouteTableAssociation4F8EB63B:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: JVCDKVPCPublicSubnet1RouteTable887989FF
+      SubnetId:
+        Ref: JVCDKVPCPublicSubnet1Subnet2933E32F
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet1/RouteTableAssociation
+  JVCDKVPCPublicSubnet1DefaultRoute28BBB669:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: JVCDKVPCPublicSubnet1RouteTable887989FF
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: JVCDKVPCIGWDE5F968F
+    DependsOn:
+      - JVCDKVPCVPCGW9AC05064
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet1/DefaultRoute
+  JVCDKVPCPublicSubnet1EIP64B65B7D:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet1/EIP
+  JVCDKVPCPublicSubnet1NATGatewayA2BAAA04:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - JVCDKVPCPublicSubnet1EIP64B65B7D
+          - AllocationId
+      SubnetId:
+        Ref: JVCDKVPCPublicSubnet1Subnet2933E32F
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet1
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet1/NATGateway
+  JVCDKVPCPublicSubnet2Subnet0344DF21:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.0.64.0/18
+      VpcId:
+        Ref: JVCDKVPC82395698
+      AvailabilityZone:
+        Fn::Select:
+          - 1
+          - Fn::GetAZs: ""
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet2
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet2/Subnet
+  JVCDKVPCPublicSubnet2RouteTable38C88222:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: JVCDKVPC82395698
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet2
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet2/RouteTable
+  JVCDKVPCPublicSubnet2RouteTableAssociation130F80C0:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: JVCDKVPCPublicSubnet2RouteTable38C88222
+      SubnetId:
+        Ref: JVCDKVPCPublicSubnet2Subnet0344DF21
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet2/RouteTableAssociation
+  JVCDKVPCPublicSubnet2DefaultRoute563A6ECC:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: JVCDKVPCPublicSubnet2RouteTable38C88222
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: JVCDKVPCIGWDE5F968F
+    DependsOn:
+      - JVCDKVPCVPCGW9AC05064
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet2/DefaultRoute
+  JVCDKVPCPublicSubnet2EIPD51FCC25:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet2/EIP
+  JVCDKVPCPublicSubnet2NATGateway543F6E4D:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - JVCDKVPCPublicSubnet2EIPD51FCC25
+          - AllocationId
+      SubnetId:
+        Ref: JVCDKVPCPublicSubnet2Subnet0344DF21
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet2
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PublicSubnet2/NATGateway
+  JVCDKVPCPrivateSubnet1SubnetB810A81D:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.0.128.0/18
+      VpcId:
+        Ref: JVCDKVPC82395698
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet1
+        - Key: aws-cdk:subnet-name
+          Value: Private
+        - Key: aws-cdk:subnet-type
+          Value: Private
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet1/Subnet
+  JVCDKVPCPrivateSubnet1RouteTableF0271BEE:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: JVCDKVPC82395698
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet1
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet1/RouteTable
+  JVCDKVPCPrivateSubnet1RouteTableAssociationA1947FCF:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: JVCDKVPCPrivateSubnet1RouteTableF0271BEE
+      SubnetId:
+        Ref: JVCDKVPCPrivateSubnet1SubnetB810A81D
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet1/RouteTableAssociation
+  JVCDKVPCPrivateSubnet1DefaultRoute998788EE:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: JVCDKVPCPrivateSubnet1RouteTableF0271BEE
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: JVCDKVPCPublicSubnet1NATGatewayA2BAAA04
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet1/DefaultRoute
+  JVCDKVPCPrivateSubnet2SubnetC85005E0:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.0.192.0/18
+      VpcId:
+        Ref: JVCDKVPC82395698
+      AvailabilityZone:
+        Fn::Select:
+          - 1
+          - Fn::GetAZs: ""
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet2
+        - Key: aws-cdk:subnet-name
+          Value: Private
+        - Key: aws-cdk:subnet-type
+          Value: Private
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet2/Subnet
+  JVCDKVPCPrivateSubnet2RouteTable7A629302:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: JVCDKVPC82395698
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet2
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet2/RouteTable
+  JVCDKVPCPrivateSubnet2RouteTableAssociationFFD73C6C:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: JVCDKVPCPrivateSubnet2RouteTable7A629302
+      SubnetId:
+        Ref: JVCDKVPCPrivateSubnet2SubnetC85005E0
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet2/RouteTableAssociation
+  JVCDKVPCPrivateSubnet2DefaultRouteA6A91879:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: JVCDKVPCPrivateSubnet2RouteTable7A629302
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: JVCDKVPCPublicSubnet2NATGateway543F6E4D
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/PrivateSubnet2/DefaultRoute
+  JVCDKVPCIGWDE5F968F:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: CdkFargateDockerStack/JV-CDK-VPC
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/IGW
+  JVCDKVPCVPCGW9AC05064:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: JVCDKVPC82395698
+      InternetGatewayId:
+        Ref: JVCDKVPCIGWDE5F968F
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-CDK-VPC/VPCGW
+  JVECSCluster23BC03DA:
+    Type: AWS::ECS::Cluster
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-ECS-Cluster/Resource
+  JVFargateServiceLB6B4927A1:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Scheme: internet-facing
+      SecurityGroups:
+        - Fn::GetAtt:
+            - JVFargateServiceLBSecurityGroup57B914A8
+            - GroupId
+      Subnets:
+        - Ref: JVCDKVPCPublicSubnet1Subnet2933E32F
+        - Ref: JVCDKVPCPublicSubnet2Subnet0344DF21
+      Type: application
+    DependsOn:
+      - JVCDKVPCPublicSubnet1DefaultRoute28BBB669
+      - JVCDKVPCPublicSubnet2DefaultRoute563A6ECC
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/LB/Resource
+  JVFargateServiceLBSecurityGroup57B914A8:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Automatically created Security Group for ELB CdkFargateDockerStackJVFargateServiceLB470BEACF
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          Description: Allow from anyone on port 80
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+      VpcId:
+        Ref: JVCDKVPC82395698
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/LB/SecurityGroup/Resource
+  JVFargateServiceLBSecurityGrouptoCdkFargateDockerStackJVFargateServiceSecurityGroup251B17D930001DB7B671:
+    Type: AWS::EC2::SecurityGroupEgress
+    Properties:
+      GroupId:
+        Fn::GetAtt:
+          - JVFargateServiceLBSecurityGroup57B914A8
+          - GroupId
+      IpProtocol: tcp
+      Description: Load balancer to target
+      DestinationSecurityGroupId:
+        Fn::GetAtt:
+          - JVFargateServiceSecurityGroup6538FC54
+          - GroupId
+      FromPort: 3000
+      ToPort: 3000
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/LB/SecurityGroup/to CdkFargateDockerStackJVFargateServiceSecurityGroup251B17D9:3000
+  JVFargateServiceLBPublicListenerE899BE5B:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - TargetGroupArn:
+            Ref: JVFargateServiceLBPublicListenerECSGroup55118689
+          Type: forward
+      LoadBalancerArn:
+        Ref: JVFargateServiceLB6B4927A1
+      Port: 80
+      Protocol: HTTP
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/LB/PublicListener/Resource
+  JVFargateServiceLBPublicListenerECSGroup55118689:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Port: 80
+      Protocol: HTTP
+      TargetType: ip
+      VpcId:
+        Ref: JVCDKVPC82395698
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/LB/PublicListener/ECSGroup/Resource
+  JVFargateServiceTaskDefTaskRole1589BDDD:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/TaskDef/TaskRole/Resource
+  JVFargateServiceTaskDefFC1A2E62:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      ContainerDefinitions:
+        - Essential: true
+          Image:
+            Fn::Join:
+              - ""
+              - - Ref: AWS::AccountId
+                - .dkr.ecr.
+                - Ref: AWS::Region
+                - "."
+                - Ref: AWS::URLSuffix
+                - /
+                - Fn::Select:
+                    - 0
+                    - Fn::Split:
+                        - "@sha256:"
+                        - Ref: AssetParameters24a2fa9c13b15bdb52479da8854d71841c6ccaf065154b6fc09f3b5c4e96b23dImageName91CD2F8D
+                - "@sha256:"
+                - Fn::Select:
+                    - 1
+                    - Fn::Split:
+                        - "@sha256:"
+                        - Ref: AssetParameters24a2fa9c13b15bdb52479da8854d71841c6ccaf065154b6fc09f3b5c4e96b23dImageName91CD2F8D
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group:
+                Ref: JVFargateServiceTaskDefwebLogGroupEADD5A86
+              awslogs-stream-prefix: JV-FargateService
+              awslogs-region:
+                Ref: AWS::Region
+          Name: web
+          PortMappings:
+            - ContainerPort: 3000
+              Protocol: tcp
+      Cpu: "256"
+      ExecutionRoleArn:
+        Fn::GetAtt:
+          - JVFargateServiceTaskDefExecutionRoleA7C917B1
+          - Arn
+      Family: CdkFargateDockerStackJVFargateServiceTaskDef1FF7B182
+      Memory: "512"
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+      TaskRoleArn:
+        Fn::GetAtt:
+          - JVFargateServiceTaskDefTaskRole1589BDDD
+          - Arn
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/TaskDef/Resource
+  JVFargateServiceTaskDefwebAssetImageAdoptRepository026173CC:
+    Type: Custom::ECRAdoptedRepository
+    Properties:
+      ServiceToken:
+        Fn::GetAtt:
+          - AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62c52BE89E9
+          - Arn
+      RepositoryName:
+        Fn::Select:
+          - 0
+          - Fn::Split:
+              - "@sha256:"
+              - Ref: AssetParameters24a2fa9c13b15bdb52479da8854d71841c6ccaf065154b6fc09f3b5c4e96b23dImageName91CD2F8D
+    DependsOn:
+      - AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62cServiceRoleDefaultPolicy6BC8737C
+      - AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62cServiceRoleD788AA17
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/TaskDef/web/AssetImage/AdoptRepository/Resource/Default
+  JVFargateServiceTaskDefwebLogGroupEADD5A86:
+    Type: AWS::Logs::LogGroup
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/TaskDef/web/LogGroup/Resource
+  JVFargateServiceTaskDefExecutionRoleA7C917B1:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/TaskDef/ExecutionRole/Resource
+  JVFargateServiceTaskDefExecutionRoleDefaultPolicyCBB9D247:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - ecr:BatchCheckLayerAvailability
+              - ecr:GetDownloadUrlForLayer
+              - ecr:BatchGetImage
+            Effect: Allow
+            Resource:
+              Fn::Join:
+                - ""
+                - - "arn:"
+                  - Ref: AWS::Partition
+                  - ":ecr:"
+                  - Ref: AWS::Region
+                  - ":"
+                  - Ref: AWS::AccountId
+                  - :repository/
+                  - Fn::GetAtt:
+                      - JVFargateServiceTaskDefwebAssetImageAdoptRepository026173CC
+                      - RepositoryName
+          - Action: ecr:GetAuthorizationToken
+            Effect: Allow
+            Resource: "*"
+          - Action:
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - JVFargateServiceTaskDefwebLogGroupEADD5A86
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: JVFargateServiceTaskDefExecutionRoleDefaultPolicyCBB9D247
+      Roles:
+        - Ref: JVFargateServiceTaskDefExecutionRoleA7C917B1
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/TaskDef/ExecutionRole/DefaultPolicy/Resource
+  JVFargateService3A519D9F:
+    Type: AWS::ECS::Service
+    Properties:
+      TaskDefinition:
+        Ref: JVFargateServiceTaskDefFC1A2E62
+      Cluster:
+        Ref: JVECSCluster23BC03DA
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 50
+      DesiredCount: 1
+      EnableECSManagedTags: false
+      HealthCheckGracePeriodSeconds: 60
+      LaunchType: FARGATE
+      LoadBalancers:
+        - ContainerName: web
+          ContainerPort: 3000
+          TargetGroupArn:
+            Ref: JVFargateServiceLBPublicListenerECSGroup55118689
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          SecurityGroups:
+            - Fn::GetAtt:
+                - JVFargateServiceSecurityGroup6538FC54
+                - GroupId
+          Subnets:
+            - Ref: JVCDKVPCPrivateSubnet1SubnetB810A81D
+            - Ref: JVCDKVPCPrivateSubnet2SubnetC85005E0
+    DependsOn:
+      - JVFargateServiceLBPublicListenerECSGroup55118689
+      - JVFargateServiceLBPublicListenerE899BE5B
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/Service/Service
+  JVFargateServiceSecurityGroup6538FC54:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: CdkFargateDockerStack/JV-FargateService/Service/SecurityGroup
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          Description: Allow all outbound traffic by default
+          IpProtocol: "-1"
+      VpcId:
+        Ref: JVCDKVPC82395698
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/Service/SecurityGroup/Resource
+  JVFargateServiceSecurityGroupfromCdkFargateDockerStackJVFargateServiceLBSecurityGroup6C336C2E300074EEF8F7:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      IpProtocol: tcp
+      Description: Load balancer to target
+      FromPort: 3000
+      GroupId:
+        Fn::GetAtt:
+          - JVFargateServiceSecurityGroup6538FC54
+          - GroupId
+      SourceSecurityGroupId:
+        Fn::GetAtt:
+          - JVFargateServiceLBSecurityGroup57B914A8
+          - GroupId
+      ToPort: 3000
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/JV-FargateService/Service/SecurityGroup/from CdkFargateDockerStackJVFargateServiceLBSecurityGroup6C336C2E:3000
+  AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62cServiceRoleD788AA17:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62c/ServiceRole/Resource
+  AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62cServiceRoleDefaultPolicy6BC8737C:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - ecr:GetRepositoryPolicy
+              - ecr:SetRepositoryPolicy
+              - ecr:DeleteRepository
+              - ecr:ListImages
+              - ecr:BatchDeleteImage
+            Effect: Allow
+            Resource:
+              Fn::Join:
+                - ""
+                - - "arn:"
+                  - Ref: AWS::Partition
+                  - ":ecr:"
+                  - Ref: AWS::Region
+                  - ":"
+                  - Ref: AWS::AccountId
+                  - :repository/
+                  - Fn::Select:
+                      - 0
+                      - Fn::Split:
+                          - "@sha256:"
+                          - Ref: AssetParameters24a2fa9c13b15bdb52479da8854d71841c6ccaf065154b6fc09f3b5c4e96b23dImageName91CD2F8D
+        Version: "2012-10-17"
+      PolicyName: AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62cServiceRoleDefaultPolicy6BC8737C
+      Roles:
+        - Ref: AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62cServiceRoleD788AA17
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62c/ServiceRole/DefaultPolicy/Resource
+  AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62c52BE89E9:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: AssetParametersa65ac4beaa2b5a7b20eebf3b7c5c1c886b71428afa377e02dab0d10ab3be57e7S3Bucket7CBBD48C
+        S3Key:
+          Fn::Join:
+            - ""
+            - - Fn::Select:
+                  - 0
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParametersa65ac4beaa2b5a7b20eebf3b7c5c1c886b71428afa377e02dab0d10ab3be57e7S3VersionKey87E3D057
+              - Fn::Select:
+                  - 1
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParametersa65ac4beaa2b5a7b20eebf3b7c5c1c886b71428afa377e02dab0d10ab3be57e7S3VersionKey87E3D057
+      Handler: handler.handler
+      Role:
+        Fn::GetAtt:
+          - AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62cServiceRoleD788AA17
+          - Arn
+      Runtime: nodejs8.10
+      Timeout: 300
+    DependsOn:
+      - AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62cServiceRoleDefaultPolicy6BC8737C
+      - AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62cServiceRoleD788AA17
+    Metadata:
+      aws:cdk:path: CdkFargateDockerStack/AdoptEcrRepositorydbc60defc59544bcaa5c28c95d68f62c/Resource
+      aws:asset:path: asset.a65ac4beaa2b5a7b20eebf3b7c5c1c886b71428afa377e02dab0d10ab3be57e7
+      aws:asset:property: Code
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Modules: aws-cdk=1.16.3,@aws-cdk/assets=1.16.3,@aws-cdk/aws-applicationautoscaling=1.16.3,@aws-cdk/aws-autoscaling=1.16.3,@aws-cdk/aws-autoscaling-common=1.16.3,@aws-cdk/aws-autoscaling-hooktargets=1.16.3,@aws-cdk/aws-certificatemanager=1.16.3,@aws-cdk/aws-cloudformation=1.16.3,@aws-cdk/aws-cloudwatch=1.16.3,@aws-cdk/aws-ec2=1.16.3,@aws-cdk/aws-ecr=1.16.3,@aws-cdk/aws-ecr-assets=1.16.3,@aws-cdk/aws-ecs=1.16.3,@aws-cdk/aws-ecs-patterns=1.16.3,@aws-cdk/aws-elasticloadbalancingv2=1.16.3,@aws-cdk/aws-events=1.16.3,@aws-cdk/aws-events-targets=1.16.3,@aws-cdk/aws-iam=1.16.3,@aws-cdk/aws-kms=1.16.3,@aws-cdk/aws-lambda=1.16.3,@aws-cdk/aws-logs=1.16.3,@aws-cdk/aws-route53=1.16.3,@aws-cdk/aws-route53-targets=1.16.3,@aws-cdk/aws-s3=1.16.3,@aws-cdk/aws-s3-assets=1.16.3,@aws-cdk/aws-servicediscovery=1.16.3,@aws-cdk/aws-sns=1.16.3,@aws-cdk/aws-sns-subscriptions=1.16.3,@aws-cdk/aws-sqs=1.16.3,@aws-cdk/aws-ssm=1.16.3,@aws-cdk/core=1.16.3,@aws-cdk/cx-api=1.16.3,@aws-cdk/region-info=1.16.3,jsii-runtime=node.js/v12.13.0
+    Condition: CDKMetadataAvailable
+Outputs:
+  JVFargateServiceLoadBalancerDNS1C492D16:
+    Value:
+      Fn::GetAtt:
+        - JVFargateServiceLB6B4927A1
+        - DNSName
+  JVFargateServiceServiceURL3CF6666B:
+    Value:
+      Fn::Join:
+        - ""
+        - - http://
+          - Fn::GetAtt:
+              - JVFargateServiceLB6B4927A1
+              - DNSName
+Parameters:
+  AssetParameters24a2fa9c13b15bdb52479da8854d71841c6ccaf065154b6fc09f3b5c4e96b23dImageName91CD2F8D:
+    Type: String
+    Description: ECR repository name and tag for asset "24a2fa9c13b15bdb52479da8854d71841c6ccaf065154b6fc09f3b5c4e96b23d"
+  AssetParametersa65ac4beaa2b5a7b20eebf3b7c5c1c886b71428afa377e02dab0d10ab3be57e7S3Bucket7CBBD48C:
+    Type: String
+    Description: S3 bucket for asset "a65ac4beaa2b5a7b20eebf3b7c5c1c886b71428afa377e02dab0d10ab3be57e7"
+  AssetParametersa65ac4beaa2b5a7b20eebf3b7c5c1c886b71428afa377e02dab0d10ab3be57e7S3VersionKey87E3D057:
+    Type: String
+    Description: S3 key for asset version "a65ac4beaa2b5a7b20eebf3b7c5c1c886b71428afa377e02dab0d10ab3be57e7"
+  AssetParametersa65ac4beaa2b5a7b20eebf3b7c5c1c886b71428afa377e02dab0d10ab3be57e7ArtifactHash3E217B68:
+    Type: String
+    Description: Artifact hash for asset "a65ac4beaa2b5a7b20eebf3b7c5c1c886b71428afa377e02dab0d10ab3be57e7"
+Conditions:
+  CDKMetadataAvailable:
+    Fn::Or:
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ca-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-northwest-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-central-1
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-3
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - me-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - sa-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-2
+

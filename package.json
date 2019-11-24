@@ -1,0 +1,28 @@
+{
+  "name": "cdk-workshop",
+  "version": "0.1.0",
+  "bin": {
+    "cdk-workshop": "bin/cdk-workshop.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@types/node": "10.17.5",
+    "typescript": "~3.7.2"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-dynamodb": "^1.17.1",
+    "@aws-cdk/aws-ecs-patterns": "^1.17.1",
+    "@aws-cdk/aws-events": "^1.17.1",
+    "@aws-cdk/aws-events-targets": "^1.17.1",
+    "@aws-cdk/aws-lambda": "^1.17.1",
+    "@aws-cdk/aws-lambda-event-sources": "^1.17.1",
+    "@aws-cdk/aws-s3-deployment": "^1.17.1",
+    "@aws-cdk/core": "^1.17.1",
+    "aws-sdk": "^2.578.0"
+  }
+}
