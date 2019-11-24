@@ -1,4 +1,6 @@
 *.js
+*.yaml
+*.pdf
 !jest.config.js
 *.d.ts
 node_modules

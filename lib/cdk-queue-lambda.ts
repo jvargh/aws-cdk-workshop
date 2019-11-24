@@ -9,7 +9,7 @@ export class CdkQueueLambda extends cdk.Stack {
     constructor(app: cdk.App, id: string) {
         super(app, id);
 
-        const queue = new sqs.Queue(this, 'MyQueue', {
+        const queue = new sqs.Queue(this, 'CDK-Queue1', {
             visibilityTimeout: Duration.seconds(30),    // default,
             receiveMessageWaitTime: Duration.seconds(20) // default
         });
