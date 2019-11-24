@@ -1,5 +1,5 @@
 # First Steps after download
- * `npm install`   install packages and dependencies from package.json
+ * `npm install`   install packages and dependencies
  * `cdk deploy`    deploy stack(s) to AWS   
 
 [Deep Dive Presentation](JV_CDK_DeepDive.pdf)
